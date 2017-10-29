@@ -983,19 +983,23 @@ public:
     // the action specified by `stop_action`.
     void run_to_rel_pos() { set_command("run-to-rel-pos"); }
 
+    // 특정 시간 동안 motor 작동
     // Run the motor for the amount of time specified in `time_sp`
     // and then stop the motor using the action specified by `stop_action`.
     void run_timed() { set_command("run-timed"); }
 
+    // duty cycle만큼 motor 작동. 동작되는 중에도 duty cycle이 바뀌면 즉각 변동.
     // Run the motor at the duty cycle specified by `duty_cycle_sp`.
     // Unlike other run commands, changing `duty_cycle_sp` while running *will*
     // take effect immediately.
     void run_direct() { set_command("run-direct"); }
 
+    // stop action이 나오기 전에 stop시킬 때
     // Stop any of the run commands before they are complete using the
     // action specified by `stop_action`.
     void stop() { set_command("stop"); }
 
+    // 설정 초기화
     // Reset all of the motor parameter attributes to their default value.
     // This will also have the effect of stopping the motor.
     void reset() { set_command("reset"); }
