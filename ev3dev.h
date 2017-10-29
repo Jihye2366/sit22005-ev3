@@ -893,7 +893,8 @@ public:
     set_attr_int("ramp_down_sp", v);
     return *this;
   }
-
+  
+  // PID제어기 (비례-적분-미분 제어기)
   // Speed P: read/write
   // The proportional constant for the speed regulation PID.
   int speed_p() const { return get_attr_int("speed_pid/Kp"); }
@@ -917,12 +918,14 @@ public:
     set_attr_int("speed_pid/Kd", v);
     return *this;
   }
-
+  
+  // 현재 state return: `running`, `ramping`, `holding`, `overloaded` and `stalled`
   // State: read-only
   // Reading returns a list of state flags. Possible flags are
   // `running`, `ramping`, `holding`, `overloaded` and `stalled`.
   mode_set state() const { return get_attr_set("state"); }
-
+  
+  // motor가 멈추도록 set
   // Stop Action: read/write
   // Reading returns the current stop action. Writing sets the stop action.
   // The value determines the motors behavior when `command` is set to `stop`.
@@ -933,7 +936,8 @@ public:
     set_attr_string("stop_action", v);
     return *this;
   }
-
+  
+  // motor controller에 명령?: `coast`, `brake` and `hold`
   // Stop Actions: read-only
   // Returns a list of stop actions supported by the motor controller.
   // Possible values are `coast`, `brake` and `hold`. `coast` means that power will
@@ -947,6 +951,7 @@ public:
   // back' to maintain its position.
   mode_set stop_actions() const { return get_attr_set("stop_actions"); }
 
+  // motor 동작 시간 return
   // Time SP: read/write
   // Writing specifies the amount of time the motor will run when using the
   // `run-timed` command. Reading returns the current value. Units are in
@@ -961,14 +966,17 @@ public:
 //~autogen
 
 //~autogen motor_commands classes.motor>currentClass
-
+  
+    // 다음 명령 전까지 motor 계속 작동
     // Run the motor until another command is sent.
     void run_forever() { set_command("run-forever"); }
 
+    // 설정된 position_sp까지 작동 (ex. point 4까지 이동)
     // Run to an absolute position specified by `position_sp` and then
     // stop using the action specified in `stop_action`.
     void run_to_abs_pos() { set_command("run-to-abs-pos"); }
 
+    // 현재 위치에서 position_sp만큼 이동 (ex. 4만큼 이동)
     // Run to a position relative to the current `position` value.
     // The new position will be current `position` + `position_sp`.
     // When the new position is reached, the motor will stop using
