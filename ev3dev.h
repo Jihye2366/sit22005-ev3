@@ -1039,6 +1039,7 @@ public:
 // with no fancy controls or feedback. This includes LEGO MINDSTORMS RCX motors
 // and LEGO Power Functions motors.
 
+// 직류 motor
 //~autogen
 class dc_motor : protected device
 {
@@ -1066,10 +1067,12 @@ public:
   // action specified by `stop_action`.
   static constexpr char command_stop[] = "stop";
 
+  // 'normal': motor가 시계 방향으로 돌도록 설정
   // With `normal` polarity, a positive duty cycle will
   // cause the motor to rotate clockwise.
   static constexpr char polarity_normal[] = "normal";
 
+  // 'inversed': motor가 반시계 방향으로 돌도록 설정
   // With `inversed` polarity, a positive duty cycle will
   // cause the motor to rotate counter-clockwise.
   static constexpr char polarity_inversed[] = "inversed";
@@ -1088,6 +1091,7 @@ public:
 
 //~autogen generic-get-set classes.dcMotor>currentClass
 
+  // 모터가 연결되어있는 포트 번호 return
   // Address: read-only
   // Returns the name of the port that this motor is connected to.
   std::string address() const { return get_attr_string("address"); }
