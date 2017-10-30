@@ -140,41 +140,90 @@ void Crain::example_code()
     b.stop();
 }
 
+
+void Crain::test_code()
+{
+        int v = 100;
+        set_speed_i (int v); 
+        float dis =  infrared_q.distance_centimeters();
+        float n;
+        int v[3];
+        int neck_pos = a.position_sp();
+        std::string hold = "hold";
+        
+        // scan
+        while(1)
+        {
+            b.set_right(true);
+            b.set_speed_sp(-1* get_speed());
+            b.run_forever();
+            
+            n = infrared_q.distance_centimeters();      
+                
+            if(n < dis){                            // if 물체를 감지하면
+                v[i] = b.position_sp();
+                i++;
+            }
+                
+            if(b.position_sp() == 660){             // End 위치까지 갔을 때
+                if(i == 2)
+                    break;
+                else   
+                    b.run_to_abs_pos(0);            // 시작 위치로
+            }  
+        }
+            
+        
+        // while문으로(i = 3,2,1)
+        for(int i = 2; i >= 0 ; i--)
+        {
+        // i번째 위치로
+            b.run_to_abs_pos(v[i]);
+            b.set_stop_action()
+        
+        // 목내리기
+            a.set_down(true);
+            a.set_speed_sp(get_speed());
+            a.run_to_abs_pos(?);    //값지정해주기
+        
+        // 집게 벌려서 잡기
+        // motor class 
+        
+        // set_duty_cycle_sp(int v) or set_time_sp(int v)
+        // c.set_command("");       //time or duty cycle
+        // c.set_polarity("normal or inversed");
+        //
+        
+        // 목 올리기
+            a.set_down(true);
+            a.set_speed_sp(-1*get_speed());
+            a.run_to_abs_pos(neck_pos);    
+        
+        // End  위치로
+            b.run_to_abs_pos(660);
+        
+        // 목 내리기
+            a.set_down(true);
+            a.set_speed_sp(get_speed());
+            a.run_to_abs_pos(?);    //값지정해주기
+        
+        // 집게 벌려서 내려놓기
+        
+        // 목 올리기
+            a.set_down(true);
+            a.set_speed_sp(-1*get_speed());
+            a.run_to_abs_pos(neck_pos); 
+        }
+}
+
 int main()
 {     
     Crain crain;
     while(true){
         if(crain.get_touch_pressed()==true){
             // scan
-        
-        for (int i=0, i<3, i++) {
-            void run_to_abs_pos(v[i]) { set_command("run-to-abs-pos"); }
-            
-        }
-        // while문으로(i = 3,2,1)
-        // i번째 위치로
-        
-        // 목내리기
-        
-        // 집게 벌려서 잡기
-        
-        // 목 올리기
-        
-        // End  위치로
-        
-        // 목 내리기
-        
-        // 집게 벌려서 내려놓기
-        
-        // 목 올리기
-        
-        // 
-    
-    
-        //Finish
-            
-        crain.example_code(); //This line is for example, you should erase this ex_code in your 'real code' 
-  
+            Crain.test_code();
+         
         }
     }
 }

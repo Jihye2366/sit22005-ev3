@@ -1096,6 +1096,7 @@ public:
   // Returns the name of the port that this motor is connected to.
   std::string address() const { return get_attr_string("address"); }
 
+  // 모터에게 attr 부여: `run-forever`, `run-timed` and `stop`
   // Command: write-only
   // Sets the command for the motor. Possible values are `run-forever`, `run-timed` and
   // `stop`. Not all commands may be supported, so be sure to check the contents
@@ -1106,20 +1107,22 @@ public:
   }
 
   // Commands: read-only
-  // Returns a list of commands supported by the motor
-  // controller.
+  // Returns a list of commands supported by the motor controller.
   mode_set commands() const { return get_attr_set("commands"); }
 
+  // 해당 기기를 로드한 driver의 이름 return
   // Driver Name: read-only
   // Returns the name of the motor driver that loaded this device. See the list
   // of [supported devices] for a list of drivers.
   std::string driver_name() const { return get_attr_string("driver_name"); }
 
+  // 현재 기기에 입력되어있는 duty cycle return
   // Duty Cycle: read-only
   // Shows the current duty cycle of the PWM signal sent to the motor. Values
   // are -100 to 100 (-100% to 100%).
   int duty_cycle() const { return get_attr_int("duty_cycle"); }
 
+  // 현재 기기에 입력되어있는 duty cycle return & 변경
   // Duty Cycle SP: read/write
   // Writing sets the duty cycle setpoint of the PWM signal sent to the motor.
   // Valid values are -100 to 100 (-100% to 100%). Reading returns the current
@@ -1130,6 +1133,7 @@ public:
     return *this;
   }
 
+  // 모터 움직이는 방향 설정
   // Polarity: read/write
   // Sets the polarity of the motor. Valid values are `normal` and `inversed`.
   std::string polarity() const { return get_attr_string("polarity"); }
@@ -1138,6 +1142,7 @@ public:
     return *this;
   }
 
+  // motor의 동작을 완전히 멈추는데 걸리는 시간을 milliseconds로 설정
   // Ramp Down SP: read/write
   // Sets the time in milliseconds that it take the motor to ramp down from 100%
   // to 0%. Valid values are 0 to 10000 (10 seconds). Default is 0.
@@ -1147,6 +1152,7 @@ public:
     return *this;
   }
 
+  // motor의 동작을 완전히 활성화하는데 걸리는 시간을 milliseconds로 설정
   // Ramp Up SP: read/write
   // Sets the time in milliseconds that it take the motor to up ramp from 0% to
   // 100%. Valid values are 0 to 10000 (10 seconds). Default is 0.
@@ -1345,6 +1351,8 @@ public:
   // * `running`: Indicates that the motor is powered.
   mode_set state() const { return get_attr_set("state"); }
 
+//----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 
 //~autogen
 
