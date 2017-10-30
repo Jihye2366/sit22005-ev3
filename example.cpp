@@ -144,9 +144,35 @@ int main()
 {     
     Crain crain;
     while(true){
-        if(crain.get_touch_pressed()==true){ 
-            
+        if(crain.get_touch_pressed()==true){
+            // scan
         
+        for (int i=0, i<3, i++) {
+            void run_to_abs_pos(v[i]) { set_command("run-to-abs-pos"); }
+            
+        }
+        // while문으로(i = 3,2,1)
+        // i번째 위치로
+        
+        // 목내리기
+        
+        // 집게 벌려서 잡기
+        
+        // 목 올리기
+        
+        // End  위치로
+        
+        // 목 내리기
+        
+        // 집게 벌려서 내려놓기
+        
+        // 목 올리기
+        
+        // 
+    
+    
+        //Finish
+            
         crain.example_code(); //This line is for example, you should erase this ex_code in your 'real code' 
   
         }
