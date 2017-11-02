@@ -1,16 +1,18 @@
+#include "ev3dev.h"
 #include "h_crane.h"
 
 class Crain : public CraneCrane
 {
 private:
-    ev3dev::touch_sensor touch_q;
+    ev3dev::ultrasonic_sensor ultrasonic_q;
+    ev3dev::sound sound_q;
     ev3dev::motor a;
     ev3dev::motor b; 
     ev3dev::motor c;
     
 public:
     // Hardware Configuration
-    Crain():m_speed(0), touch_q(ev3dev::INPUT_2),a(ev3dev::OUTPUT_B), b(ev3dev::OUTPUT_C), c(ev3dev::OUTPUT_A)
+    Crain():m_speed(0), ultrasonic_q(ev3dev::INPUT_2),a(ev3dev::OUTPUT_B), b(ev3dev::OUTPUT_C), c(ev3dev::OUTPUT_A)
     {
         
     }
@@ -92,6 +94,7 @@ public:
     }
 public:
     void example_code();
+    void test_code();
 };
 
 void Crain::example_code()
@@ -178,15 +181,22 @@ void Crain::test_code()
     for(int i = 2; i >= 0 ; i--)
     {
     // i번째 위치로
-        b.run_to_abs_pos(v[i]);
-        b.set_stop_action()
+        c.run_to_abs_pos(v[i]);
+        c.set_stop_action()
     
     // 목내리기
-        a.set_down(true);
-        a.set_speed_sp(get_speed());
-        a.run_to_abs_pos(?);    //값지정해주기
+        b.set_down(true);
+        b.set_speed_sp(get_speed());
+        b.run_to_abs_pos(?);    //값지정해주기
     
     // 집게 벌려서 잡기
+        while {
+        a.set_speed_sp(get_speed());
+        
+        a.set_stop_action("hold");
+        a.stop();
+        
+        
     // motor class 
     
     // set_duty_cycle_sp(int v) or set_time_sp(int v)
@@ -208,6 +218,7 @@ void Crain::test_code()
         a.run_to_abs_pos(?);    //값지정해주기
     
     // 집게 벌려서 내려놓기
+    
     
     // 목 올리기
         a.set_down(true);
