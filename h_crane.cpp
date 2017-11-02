@@ -1,6 +1,5 @@
 #include "h_crane.h"
 
-
 CraneCrane::CraneCrane()
 : m_down(false), m_up(false), m_right(false),
   m_left(false), m_enter(false), m_escape(false)

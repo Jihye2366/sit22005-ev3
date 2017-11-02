@@ -893,8 +893,7 @@ public:
     set_attr_int("ramp_down_sp", v);
     return *this;
   }
-  
-  // PID제어기 (비례-적분-미분 제어기)
+
   // Speed P: read/write
   // The proportional constant for the speed regulation PID.
   int speed_p() const { return get_attr_int("speed_pid/Kp"); }
@@ -918,14 +917,12 @@ public:
     set_attr_int("speed_pid/Kd", v);
     return *this;
   }
-  
-  // 현재 state return: `running`, `ramping`, `holding`, `overloaded` and `stalled`
+
   // State: read-only
   // Reading returns a list of state flags. Possible flags are
   // `running`, `ramping`, `holding`, `overloaded` and `stalled`.
   mode_set state() const { return get_attr_set("state"); }
-  
-  // motor가 멈추도록 set
+
   // Stop Action: read/write
   // Reading returns the current stop action. Writing sets the stop action.
   // The value determines the motors behavior when `command` is set to `stop`.
@@ -936,8 +933,7 @@ public:
     set_attr_string("stop_action", v);
     return *this;
   }
-  
-  // motor controller에 명령?: `coast`, `brake` and `hold`
+
   // Stop Actions: read-only
   // Returns a list of stop actions supported by the motor controller.
   // Possible values are `coast`, `brake` and `hold`. `coast` means that power will
@@ -951,7 +947,6 @@ public:
   // back' to maintain its position.
   mode_set stop_actions() const { return get_attr_set("stop_actions"); }
 
-  // motor 동작 시간 return
   // Time SP: read/write
   // Writing specifies the amount of time the motor will run when using the
   // `run-timed` command. Reading returns the current value. Units are in
@@ -966,40 +961,33 @@ public:
 //~autogen
 
 //~autogen motor_commands classes.motor>currentClass
-  
-    // 다음 명령 전까지 motor 계속 작동
+
     // Run the motor until another command is sent.
     void run_forever() { set_command("run-forever"); }
 
-    // 설정된 position_sp까지 작동 (ex. point 4까지 이동)
     // Run to an absolute position specified by `position_sp` and then
     // stop using the action specified in `stop_action`.
     void run_to_abs_pos() { set_command("run-to-abs-pos"); }
 
-    // 현재 위치에서 position_sp만큼 이동 (ex. 4만큼 이동)
     // Run to a position relative to the current `position` value.
     // The new position will be current `position` + `position_sp`.
     // When the new position is reached, the motor will stop using
     // the action specified by `stop_action`.
     void run_to_rel_pos() { set_command("run-to-rel-pos"); }
 
-    // 특정 시간 동안 motor 작동
     // Run the motor for the amount of time specified in `time_sp`
     // and then stop the motor using the action specified by `stop_action`.
     void run_timed() { set_command("run-timed"); }
 
-    // duty cycle만큼 motor 작동. 동작되는 중에도 duty cycle이 바뀌면 즉각 변동.
     // Run the motor at the duty cycle specified by `duty_cycle_sp`.
     // Unlike other run commands, changing `duty_cycle_sp` while running *will*
     // take effect immediately.
     void run_direct() { set_command("run-direct"); }
 
-    // stop action이 나오기 전에 stop시킬 때
     // Stop any of the run commands before they are complete using the
     // action specified by `stop_action`.
     void stop() { set_command("stop"); }
 
-    // 설정 초기화
     // Reset all of the motor parameter attributes to their default value.
     // This will also have the effect of stopping the motor.
     void reset() { set_command("reset"); }
@@ -1039,7 +1027,6 @@ public:
 // with no fancy controls or feedback. This includes LEGO MINDSTORMS RCX motors
 // and LEGO Power Functions motors.
 
-// 직류 motor
 //~autogen
 class dc_motor : protected device
 {
@@ -1067,12 +1054,10 @@ public:
   // action specified by `stop_action`.
   static constexpr char command_stop[] = "stop";
 
-  // 'normal': motor가 시계 방향으로 돌도록 설정
   // With `normal` polarity, a positive duty cycle will
   // cause the motor to rotate clockwise.
   static constexpr char polarity_normal[] = "normal";
 
-  // 'inversed': motor가 반시계 방향으로 돌도록 설정
   // With `inversed` polarity, a positive duty cycle will
   // cause the motor to rotate counter-clockwise.
   static constexpr char polarity_inversed[] = "inversed";
@@ -1091,12 +1076,10 @@ public:
 
 //~autogen generic-get-set classes.dcMotor>currentClass
 
-  // 모터가 연결되어있는 포트 번호 return
   // Address: read-only
   // Returns the name of the port that this motor is connected to.
   std::string address() const { return get_attr_string("address"); }
 
-  // 모터에게 attr 부여: `run-forever`, `run-timed` and `stop`
   // Command: write-only
   // Sets the command for the motor. Possible values are `run-forever`, `run-timed` and
   // `stop`. Not all commands may be supported, so be sure to check the contents
@@ -1107,22 +1090,20 @@ public:
   }
 
   // Commands: read-only
-  // Returns a list of commands supported by the motor controller.
+  // Returns a list of commands supported by the motor
+  // controller.
   mode_set commands() const { return get_attr_set("commands"); }
 
-  // 해당 기기를 로드한 driver의 이름 return
   // Driver Name: read-only
   // Returns the name of the motor driver that loaded this device. See the list
   // of [supported devices] for a list of drivers.
   std::string driver_name() const { return get_attr_string("driver_name"); }
 
-  // 현재 기기에 입력되어있는 duty cycle return
   // Duty Cycle: read-only
   // Shows the current duty cycle of the PWM signal sent to the motor. Values
   // are -100 to 100 (-100% to 100%).
   int duty_cycle() const { return get_attr_int("duty_cycle"); }
 
-  // 현재 기기에 입력되어있는 duty cycle return & 변경
   // Duty Cycle SP: read/write
   // Writing sets the duty cycle setpoint of the PWM signal sent to the motor.
   // Valid values are -100 to 100 (-100% to 100%). Reading returns the current
@@ -1133,7 +1114,6 @@ public:
     return *this;
   }
 
-  // 모터 움직이는 방향 설정
   // Polarity: read/write
   // Sets the polarity of the motor. Valid values are `normal` and `inversed`.
   std::string polarity() const { return get_attr_string("polarity"); }
@@ -1142,7 +1122,6 @@ public:
     return *this;
   }
 
-  // motor의 동작을 완전히 멈추는데 걸리는 시간을 milliseconds로 설정
   // Ramp Down SP: read/write
   // Sets the time in milliseconds that it take the motor to ramp down from 100%
   // to 0%. Valid values are 0 to 10000 (10 seconds). Default is 0.
@@ -1152,7 +1131,6 @@ public:
     return *this;
   }
 
-  // motor의 동작을 완전히 활성화하는데 걸리는 시간을 milliseconds로 설정
   // Ramp Up SP: read/write
   // Sets the time in milliseconds that it take the motor to up ramp from 0% to
   // 100%. Valid values are 0 to 10000 (10 seconds). Default is 0.
@@ -1351,8 +1329,6 @@ public:
   // * `running`: Indicates that the motor is powered.
   mode_set state() const { return get_attr_set("state"); }
 
-//----------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------
 
 //~autogen
 

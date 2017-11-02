@@ -12,17 +12,17 @@ private:
     
 public:
     // Hardware Configuration
-    Crain():m_speed(0), ultrasonic_q(ev3dev::INPUT_2),a(ev3dev::OUTPUT_B), b(ev3dev::OUTPUT_C), c(ev3dev::OUTPUT_A)
+    Crain():m_speed(0), ultrasonic_q(ev3dev::INPUT_1), a(ev3dev::OUTPUT_B), b(ev3dev::OUTPUT_C), c(ev3dev::OUTPUT_A) // touch_q(ev3dev::INPUT_2),
     {
         
     }
     
     int m_speed;
     
-    bool get_touch_pressed()
-    {
-        return touch_q.is_pressed();
-    }
+    //bool get_touch_pressed()
+    //{
+    //    return touch_q.is_pressed();
+    //}
     
     virtual bool get_down()
     {
@@ -120,12 +120,12 @@ void Crain::example_code()
         }
         if(get_left())
         {
-               b.set_speed_sp(-1*get_speed());
+               b.set_speed_sp(get_speed());
                b.run_forever();
         }
         if(get_right())
         {
-               b.set_speed_sp(get_speed());
+               b.set_speed_sp(-1* get_speed());
                b.run_forever();
         }
        
@@ -145,15 +145,17 @@ void Crain::example_code()
 
 
 void Crain::test_code()
-{
-    int v = 100;
-    set_speed_i (int v); 
-    float dis =  infrared_q.distance_centimeters();
+{   
     float n;
     int v[3];
-    int neck_pos = a.position_sp();
     std::string hold = "hold";
-        
+    int i=0;
+    
+    a.reset();
+    b.reset();
+    c.reset();
+    
+/*        
     // scan
     while(1)
     {
@@ -175,14 +177,15 @@ void Crain::test_code()
                 b.run_to_abs_pos(0);            // 시작 위치로
         }  
     }
-        
-    
+*/      
+/*    
     // while문으로(i = 3,2,1)
     for(int i = 2; i >= 0 ; i--)
     {
     // i번째 위치로
         c.run_to_abs_pos(v[i]);
-        c.set_stop_action()
+        c.set_stop_action("hold");
+        c.stop()
     
     // 목내리기
         b.set_down(true);
@@ -190,12 +193,13 @@ void Crain::test_code()
         b.run_to_abs_pos(?);    //값지정해주기
     
     // 집게 벌려서 잡기
-        while {
-        a.set_speed_sp(get_speed());
-        
-        a.set_stop_action("hold");
-        a.stop();
-        
+        // while {(a.position_sp() <=20) || (a.position_sp() >=20)  // 오차범위
+            a.set_speed_sp(get_speed());
+            a.set_position_sp();
+            a.run_to_abs_pos();
+            a.set_stop_action("hold");
+            a.stop();
+        //}
         
     // motor class 
     
@@ -223,9 +227,13 @@ void Crain::test_code()
     // 목 올리기
         a.set_down(true);
         a.set_speed_sp(-1*get_speed());
-        a.run_to_abs_pos(neck_pos); 
+        a.run_to_abs_pos(neck_pos);
     }
+*/
+    
 }
+
+
 
 int main()
 {     
