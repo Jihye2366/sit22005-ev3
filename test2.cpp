@@ -256,8 +256,8 @@ void Crain::test_code()
     a.reset();
     b.reset();
     
-    move_up(200);
-    sleep(1);
+    move_up(-200);
+    sleep(0.5);
     
     
     // scan
@@ -291,20 +291,20 @@ void Crain::test_code()
         //     }  
         // }
         
-        a.reset();    // 현재 neck 위치를 0으로
-        b.reset();
-        c.reset();      // 닫혀 있는 집게의 위치를 0으로
+        // a.reset();    // 현재 neck 위치를 0으로
+        // b.reset();
+        // c.reset();      // 닫혀 있는 집게의 위치를 0으로
         
-        
+        /*
         for(int i = 2; i >= 0 ; i--)
         {
             
             move_right(550);                   // End 위치로(test)
-            sleep(1);
+            sleep(0.5);
             
             b.reset();
             
-            move_left(v[i]);                    // i 번째 위치로
+            move_left(v[i]);                   // i 번째 위치로
 
             // if(i==0)                            // 물건 잡기
             //     take_object(0);                 
@@ -320,6 +320,7 @@ void Crain::test_code()
         
         a.stop();
         b.stop();
+        */
 }
 
 int main()
@@ -328,9 +329,9 @@ int main()
     while(true){
         // if(crain.get_touch_pressed()==true){
             // test_code* instance = new test_code;
-            crain.example_code();
+            // crain.example_code();
             crain.test_code();
             // delete test_code;
-        // }
+            // }
     }
 }
