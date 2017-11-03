@@ -13,10 +13,10 @@ private:
     ev3dev::motor b; 
     ev3dev::motor c;
     
-// a: 위아래, b: 좌우, c: 집게
+// a: neck, b: axis, c: pick
 public:
     // Hardware Configuration
-    Crain():m_speed(0), touch_q(ev3dev::INPUT_2), ultrasonic_q(ev3dev::INPUT_1), a(ev3dev::OUTPUT_B), b(ev3dev::OUTPUT_C), c(ev3dev::OUTPUT_A)
+    Crain():m_speed(0), touch_q(ev3dev::INPUT_2), ultrasonic_q(ev3dev::INPUT_1), a(ev3dev::OUTPUT_A), b(ev3dev::OUTPUT_B), c(ev3dev::OUTPUT_C)
     {
         
     }
@@ -160,7 +160,7 @@ void Crain::example_code()
     b.stop();
 }
 
-void Crain::move_right(int n)       //end 까지 550?
+void Crain::move_axis(int n)       //end 까지 550?
 {
     // while ((b.position_sp() <=20) || (b.position_sp() >=20)) {
         b.set_speed_sp(get_speed());
@@ -171,18 +171,8 @@ void Crain::move_right(int n)       //end 까지 550?
     // }
 }
 
-void Crain::move_left(int n)
-{
-    // while ((b.position_sp() <=20) || (b.position_sp() >=20)) {
-        b.set_speed_sp(-1*get_speed());
-        b.set_position_sp(n);
-        b.run_to_abs_pos();
-        b.set_stop_action("hold");
-        b.stop();
-    // }
-}
 
-void Crain::move_down(int n)//180
+void Crain::move_neck(int n) // 350 정도, max 670
 {
     // while ((a.position_sp() <=20) || (a.position_sp() >=20)) {
         a.set_speed_sp(get_speed());
@@ -193,33 +183,11 @@ void Crain::move_down(int n)//180
     // }
 }
 
-void Crain::move_up(int n)
-{
-    // while ((a.position_sp() <=20) || (a.position_sp() >=20)) {
-        a.set_speed_sp(-1*get_speed());
-        a.set_position_sp(n);
-        a.run_to_abs_pos();
-        a.set_stop_action("hold");
-        a.stop();
-    // }
-}
-
-void Crain::close()
+void Crain::pick(int n) // 0부터 100
 {
     // while ((c.position_sp() <=20) || (c.position_sp() >=20)) {
         c.set_speed_sp(get_speed());
         c.set_position_sp(0);
-        c.run_to_abs_pos();
-        c.set_stop_action("hold");
-        c.stop();
-    // }
-}
-
-void Crain::open()
-{
-    // while ((c.position_sp() <=20) || (c.position_sp() >=20)) {
-        c.set_speed_sp(-1*get_speed());
-        c.set_position_sp(100);
         c.run_to_abs_pos();
         c.set_stop_action("hold");
         c.stop();
@@ -256,7 +224,7 @@ void Crain::test_code()
     a.reset();
     b.reset();
     
-    move_up(-200);
+    move_neck(350);
     sleep(0.5);
     
     
@@ -295,43 +263,42 @@ void Crain::test_code()
         // b.reset();
         // c.reset();      // 닫혀 있는 집게의 위치를 0으로
         
-        /*
-        for(int i = 2; i >= 0 ; i--)
-        {
+    /*    
+    for(int i = 2; i >= 0 ; i--)
+    {
             
-            move_right(550);                   // End 위치로(test)
-            sleep(0.5);
+        move_right(550);                   // End 위치로(test)
+        sleep(0.5);
             
-            b.reset();
+        b.reset();
             
-            move_left(v[i]);                   // i 번째 위치로
+        move_left(v[i]);                   // i 번째 위치로
 
-            // if(i==0)                            // 물건 잡기
-            //     take_object(0);                 
-            // else
-            //     take_object(1);
-    
-            //move_right(550);                    // End 위치로
-    
-            //put_object();                       // 물건 놓기
-            
-            //b.reset();
-        }
+        // if(i==0)                            // 물건 잡기
+        //     take_object(0);                 
+        // else
+        //     take_object(1);
+                //move_right(550);                    // End 위치로
+                //put_object();                       // 물건 놓기
         
-        a.stop();
-        b.stop();
-        */
+        //b.reset();
+    }
+        
+        // a.stop();
+        // b.stop();
+    */
 }
 
 int main()
 {     
     Crain crain;
     while(true){
-        // if(crain.get_touch_pressed()==true){
+        crain.example_code();
+        if(crain.get_touch_pressed()==true){
             // test_code* instance = new test_code;
             // crain.example_code();
             crain.test_code();
             // delete test_code;
-            // }
+        }
     }
 }

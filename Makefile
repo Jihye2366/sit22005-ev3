@@ -1,4 +1,4 @@
-all: ev3dev.a test2.o h_crane.o
+all: ev3dev.a test2.o h_crane.o 
 	arm-linux-gnueabi-g++-4.7 -L. -o test2 test2.o h_crane.o -lev3dev
 
 ev3dev.a: ev3dev.cpp 

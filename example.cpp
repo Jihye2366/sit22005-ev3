@@ -10,7 +10,7 @@ private:
     
 public:
     // Hardware Configuration
-    Crain():m_speed(0), touch_q(ev3dev::INPUT_2),a(ev3dev::OUTPUT_B), b(ev3dev::OUTPUT_C), c(ev3dev::OUTPUT_A)
+    Crain():m_speed(0), touch_q(ev3dev::INPUT_2),a(ev3dev::OUTPUT_A), b(ev3dev::OUTPUT_B), c(ev3dev::OUTPUT_C)
     {
         
     }
@@ -21,6 +21,8 @@ public:
     {
         return touch_q.is_pressed();
     }
+    
+    
     
     virtual bool get_down()
     {
@@ -146,9 +148,7 @@ int main()
     while(true){
         if(crain.get_touch_pressed()==true){ 
             
-        
-        crain.example_code(); //This line is for example, you should erase this ex_code in your 'real code' 
-  
+            crain.example_code();
         }
     }
 }
