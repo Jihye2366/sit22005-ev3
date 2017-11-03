@@ -162,68 +162,68 @@ void Crain::example_code()
 
 void Crain::move_right(int n)       //end 까지 550?
 {
-    while {(b.position_sp() <=20) || (b.position_sp() >=20)
+    // while ((b.position_sp() <=20) || (b.position_sp() >=20)) {
         b.set_speed_sp(get_speed());
         b.set_position_sp(n);
         b.run_to_abs_pos();
         b.set_stop_action("hold");
         b.stop();
-    }
+    // }
 }
 
 void Crain::move_left(int n)
 {
-    while {(b.position_sp() <=20) || (b.position_sp() >=20)
+    // while ((b.position_sp() <=20) || (b.position_sp() >=20)) {
         b.set_speed_sp(-1*get_speed());
         b.set_position_sp(n);
         b.run_to_abs_pos();
         b.set_stop_action("hold");
         b.stop();
-    }
+    // }
 }
 
 void Crain::move_down(int n)//180
 {
-    while {(a.position_sp() <=20) || (a.position_sp() >=20)
+    // while ((a.position_sp() <=20) || (a.position_sp() >=20)) {
         a.set_speed_sp(get_speed());
         a.set_position_sp(n);
         a.run_to_abs_pos();
         a.set_stop_action("hold");
         a.stop();
-    }
+    // }
 }
 
 void Crain::move_up(int n)
 {
-    while {(a.position_sp() <=20) || (a.position_sp() >=20)
+    // while ((a.position_sp() <=20) || (a.position_sp() >=20)) {
         a.set_speed_sp(-1*get_speed());
         a.set_position_sp(n);
         a.run_to_abs_pos();
         a.set_stop_action("hold");
         a.stop();
-    }
+    // }
 }
 
 void Crain::close()
 {
-     while {(c.position_sp() <=20) || (c.position_sp() >=20)
+    // while ((c.position_sp() <=20) || (c.position_sp() >=20)) {
         c.set_speed_sp(get_speed());
         c.set_position_sp(0);
         c.run_to_abs_pos();
         c.set_stop_action("hold");
         c.stop();
-    }
+    // }
 }
 
 void Crain::open()
 {
-    while {(c.position_sp() <=20) || (c.position_sp() >=20)
+    // while ((c.position_sp() <=20) || (c.position_sp() >=20)) {
         c.set_speed_sp(-1*get_speed());
         c.set_position_sp(100);
         c.run_to_abs_pos();
         c.set_stop_action("hold");
         c.stop();
-    }
+    // }
 }
 
 /*
@@ -256,10 +256,9 @@ void Crain::test_code()
     a.reset();
     b.reset();
     
-    move_up(-200);
+    move_up(200);
     sleep(1);
-    move_right(550);
-    sleep(1);
+    
     
     // scan
     
@@ -300,11 +299,12 @@ void Crain::test_code()
         for(int i = 2; i >= 0 ; i--)
         {
             
-            move_right(550);                    // End 위치로(test)
+            move_right(550);                   // End 위치로(test)
+            sleep(1);
             
             b.reset();
             
-            move_left(-550+v[i]);                    // i 번째 위치로
+            move_left(v[i]);                    // i 번째 위치로
 
             // if(i==0)                            // 물건 잡기
             //     take_object(0);                 
@@ -322,100 +322,13 @@ void Crain::test_code()
         b.stop();
 }
 
-/*
-void Crain::test_code()
-{   
-    float n;
-    int v[3];
-    std::string hold = "hold";
-    int i=0;
-    
-    a.reset();
-    b.reset();
-    c.reset();
-    
-    // scan
-    while(1)
-    {
-        b.set_right(true);
-        b.set_speed_sp(-1* get_speed());
-        b.run_forever();
-        
-        n = infrared_q.distance_centimeters();      
-            
-        if(n < dis){                            // if 물체를 감지하면
-            v[i] = b.position_sp();
-            i++;
-        }
-            
-        if(b.position_sp() == 660){             // End 위치까지 갔을 때
-            if(i == 2)
-                break;
-            else   
-                b.run_to_abs_pos(0);            // 시작 위치로
-        }  
-    }
-
-    // while문으로(i = 3,2,1)
-    for(int i = 2; i >= 0 ; i--)
-    {
-    // i번째 위치로
-        c.run_to_abs_pos(v[i]);
-        c.set_stop_action("hold");
-        c.stop()
-    
-    // 목내리기
-        b.set_down(true);
-        b.set_speed_sp(get_speed());
-        b.run_to_abs_pos(?);    //값지정해주기
-    
-    // 집게 벌려서 잡기
-         while {(a.position_sp() <=20) || (a.position_sp() >=20)  // 오차범위
-            a.set_speed_sp(get_speed());
-            a.set_position_sp(550);
-            a.run_to_abs_pos();
-            a.set_stop_action("hold");
-            a.stop();
-        }
-        
-    // motor class 
-    
-    // set_duty_cycle_sp(int v) or set_time_sp(int v)
-    // c.set_command("");       //time or duty cycle
-    // c.set_polarity("normal or inversed");
-    //
-    
-    // 목 올리기
-        a.set_down(true);
-        a.set_speed_sp(-1*get_speed());
-        a.run_to_abs_pos(neck_pos);    
-    
-    // End  위치로
-        b.run_to_abs_pos(660);
-    
-    // 목 내리기
-        a.set_down(true);
-        a.set_speed_sp(get_speed());
-        a.run_to_abs_pos(?);    //값지정해주기
-    
-    // 집게 벌려서 내려놓기
-    
-    
-    // 목 올리기
-        a.set_down(true);
-        a.set_speed_sp(-1*get_speed());
-        a.run_to_abs_pos(neck_pos);
-    }
-}
-*/
-
-
 int main()
 {     
     Crain crain;
     while(true){
         // if(crain.get_touch_pressed()==true){
             // test_code* instance = new test_code;
+            crain.example_code();
             crain.test_code();
             // delete test_code;
         // }
