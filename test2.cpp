@@ -1,3 +1,5 @@
+#include <iostream>
+#include <stdlib.h>
 #include "ev3dev.h"
 #include "h_crane.h"
 
@@ -246,7 +248,9 @@ void Crain::test_code()
     b.reset();
     
     move_up(-200);
+    sleep(1);
     move_right(550);
+    sleep(1);
     
     // scan
     
@@ -402,8 +406,9 @@ int main()
     Crain crain;
     while(true){
         // if(crain.get_touch_pressed()==true){
-            // scan
+            // test_code* instance = new test_code;
             crain.test_code();
+            // delete test_code;
         // }
     }
 }
