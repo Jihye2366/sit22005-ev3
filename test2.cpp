@@ -6,6 +6,7 @@
 class Crain : public CraneCrane
 {
 private:
+    ev3dev::touch_sensor touch_q;
     ev3dev::ultrasonic_sensor ultrasonic_q;
     ev3dev::sound sound_q;
     ev3dev::motor a;
@@ -15,16 +16,21 @@ private:
 // a: 위아래, b: 좌우, c: 집게
 public:
     // Hardware Configuration
-    Crain():m_speed(0), ultrasonic_q(ev3dev::INPUT_1), a(ev3dev::OUTPUT_B), b(ev3dev::OUTPUT_C), c(ev3dev::OUTPUT_A) // touch_q(ev3dev::INPUT_2),
+    Crain():m_speed(0), touch_q(ev3dev::INPUT_2), ultrasonic_q(ev3dev::INPUT_1), a(ev3dev::OUTPUT_B), b(ev3dev::OUTPUT_C), c(ev3dev::OUTPUT_A)
     {
         
     }
     
     int m_speed;
-    // bool get_touch_pressed()
-    // {
-    //     return touch_q.is_pressed();
-    // }
+    bool get_touch_pressed()
+    {
+        return touch_q.is_pressed();
+    }
+    
+    bool get_sensed()
+    {
+        return ultrasonic_q.distance_inches();
+    }
     
     virtual bool get_down()
     {
@@ -363,7 +369,7 @@ void Crain::test_code()
     // 집게 벌려서 잡기
          while {(a.position_sp() <=20) || (a.position_sp() >=20)  // 오차범위
             a.set_speed_sp(get_speed());
-            a.set_position_sp();
+            a.set_position_sp(550);
             a.run_to_abs_pos();
             a.set_stop_action("hold");
             a.stop();
