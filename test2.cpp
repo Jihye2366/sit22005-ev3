@@ -162,69 +162,71 @@ void Crain::example_code()
 
 void Crain::move_right(int n)       //end 까지 550?
 {
-    //set_right(true);
-    b.set_speed_sp(get_speed());
-    
-    //while(b.position_sp() < n ){
-    while(b.position() < n ){
-        b.run_forever();}
-    b.set_stop_action("hold");
-    b.stop();
+    while {(b.position_sp() <=20) || (b.position_sp() >=20)
+        b.set_speed_sp(get_speed());
+        b.set_position_sp(n);
+        b.run_to_abs_pos();
+        b.set_stop_action("hold");
+        b.stop();
+    }
 }
 
 void Crain::move_left(int n)
 {
-    //set_left(true);
-    b.set_speed_sp(-1*get_speed());
-            
-    while(b.position() > n ){
-        b.run_forever();}
-    //b.set_stop_action("hold");
-    b.stop();
+    while {(b.position_sp() <=20) || (b.position_sp() >=20)
+        b.set_speed_sp(-1*get_speed());
+        b.set_position_sp(n);
+        b.run_to_abs_pos();
+        b.set_stop_action("hold");
+        b.stop();
+    }
 }
 
 void Crain::move_down(int n)//180
 {
-    //set_down(true);
-    a.set_speed_sp(get_speed());
-    while(a.position() < n){ 
-        a.run_forever();}
-    a.set_stop_action("hold");
-    a.stop();
+    while {(a.position_sp() <=20) || (a.position_sp() >=20)
+        a.set_speed_sp(get_speed());
+        a.set_position_sp(n);
+        a.run_to_abs_pos();
+        a.set_stop_action("hold");
+        a.stop();
+    }
 }
 
-void Crain::move_up(int n) //0
+void Crain::move_up(int n)
 {
-    //set_up(true);
-    a.set_speed_sp(-1*get_speed());
-    while(a.position() > n){ 
-        a.run_forever();}
-    a.set_stop_action("hold");
-    a.stop();
+    while {(a.position_sp() <=20) || (a.position_sp() >=20)
+        a.set_speed_sp(-1*get_speed());
+        a.set_position_sp(n);
+        a.run_to_abs_pos();
+        a.set_stop_action("hold");
+        a.stop();
+    }
 }
 
 void Crain::close()
 {
-    c.set_speed_sp(get_speed());      
-    while(c.position() < 0) 
-        c.run_forever();
-        
-    c.set_stop_action("hold");       
-    c.stop();
-    
+     while {(c.position_sp() <=20) || (c.position_sp() >=20)
+        c.set_speed_sp(get_speed());
+        c.set_position_sp(0);
+        c.run_to_abs_pos();
+        c.set_stop_action("hold");
+        c.stop();
+    }
 }
 
 void Crain::open()
 {
-    c.set_speed_sp(-1*get_speed());
-    while(c.position() > -50)
-        c.run_forever();
-    c.set_stop_action("hold");
-    c.stop();
-    
+    while {(c.position_sp() <=20) || (c.position_sp() >=20)
+        c.set_speed_sp(-1*get_speed());
+        c.set_position_sp(100);
+        c.run_to_abs_pos();
+        c.set_stop_action("hold");
+        c.stop();
+    }
 }
 
-
+/*
 void Crain::take_object(int n)          //n=0이면 open
 {
     if(n==0)
@@ -243,6 +245,7 @@ void Crain::put_object()
     open();
     move_up(0);
 }
+*/
 
 void Crain::test_code()
 {
